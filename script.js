@@ -1,11 +1,11 @@
 import { WORDS } from "./words.js";
 
 const NUMBER_OF_GUESSES = 6;
-let guessesRemaining = NUMBER_OF_GUESSES;
+let guessesRemaining = NUMBER_OF_GUESSES; 
 let currentGuess = [];
 let nextLetter = 0;
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-
+// as 3 variáveis let acima não podem ser substituídas, pois seus valores serão alterados conforme o jogo acontece/
 console.log(rightGuessString);
 
 const initBoard = () => {
@@ -48,9 +48,9 @@ function shadeKeyBoard(letter, color) {
   }
 }
 
-function deleteLetter() {
-  let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
-  let box = row.children[nextLetter - 1];
+const deleteLetter = () => {
+  const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+  const box = row.children[nextLetter - 1];
   box.textContent = "";
   box.classList.remove("filled-box");
   currentGuess.pop();
