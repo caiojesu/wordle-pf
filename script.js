@@ -23,30 +23,27 @@ function createBoard(board){
     board.appendChild(row);
   }
 }
-
-function createColumns(row){
-    let box = document.createElement("div");
+//substituí a função function pela função const em notação arrow
+ const createColumns = (row) => {
+    const box = document.createElement("div");
     box.className = "letter-box";
     row.appendChild(box);
 }
+//utilizei de funções const, função de seta, utilização de mapeamento com 'array.from' e 'for.each', tornando o código mais funcional e respeitando o principio da imutabilidade.
+const shadeKeyBoard =(letter, color) => {
+  const keyboardButtons = Array.from(document.getElementsByClassName("keyboard-button"));
 
-function shadeKeyBoard(letter, color) {
-  for (const elem of document.getElementsByClassName("keyboard-button")) {
+  keyboardButtons.forEach((elem) => {
     if (elem.textContent === letter) {
-      let oldColor = elem.style.backgroundColor;
-      if (oldColor === "green") {
-        return;
+      const oldColor = elem.style.backgroundColor;
+      if (oldColor !== "green" && !(oldColor === "yellow" && color !== "green")) {
+        const updatedElem = Object.assign({}, elem, { style: { backgroundColor: color } });
+        elem.parentNode.replaceChild(updatedElem, elem);
       }
-
-      if (oldColor === "yellow" && color !== "green") {
-        return;
-      }
-
-      elem.style.backgroundColor = color;
-      break;
     }
-  }
+  });
 }
+
 
 const deleteLetter = () => {
   const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
