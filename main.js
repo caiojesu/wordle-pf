@@ -1,5 +1,6 @@
-import { WORDS } from "./words.js";
-import { initialGameState } from "./initial_game_state.js";
+import { WORDS } from "./modules/words.js";
+import { initialGameState } from "./modules/initial_game_state.js";
+import { deleteLetter } from "./modules/game_controller.js";
 
 console.log(initialGameState);
 
@@ -24,11 +25,11 @@ function createBoard(board){
     box.className = "letter-box";
     row.appendChild(box);
 }
-//utilizei de funções const, função de seta, utilização de mapeamento com 'array.from' e 'for.each', tornando o código mais funcional e respeitando o principio da imutabilidade.
-const shadeKeyBoard =(letter, color) => {
+
+const shadeKeyBoard = (letter, color) => {
   const keyboardButtons = Array.from(document.getElementsByClassName("keyboard-button"));
 
-  keyboardButtons.forEach((elem) => {
+    keyboardButtons.forEach((elem) => {
     if (elem.textContent === letter) {
       const oldColor = elem.style.backgroundColor;
       if (oldColor !== "green" && !(oldColor === "yellow" && color !== "green")) {
@@ -36,16 +37,6 @@ const shadeKeyBoard =(letter, color) => {
       }
     }
   });
-}
-
-
-const deleteLetter = () => {
-  const row = document.getElementsByClassName("letter-row")[6 - initialGameState.guessesRemaining];
-  const box = row.children[initialGameState.nextLetter - 1];
-  box.textContent = "";
-  box.classList.remove("filled-box");
-  initialGameState.currentGuess.pop();
-  initialGameState.nextLetter -= 1;
 }
 
 function checkGuess() {
@@ -192,5 +183,6 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
 
   document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
+
 
 initBoard();
