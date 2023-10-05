@@ -1,12 +1,7 @@
 import { WORDS } from "./words.js";
+import { initialGameState } from "./initial_game_state.js";
 
-const NUMBER_OF_GUESSES = 6;
-let guessesRemaining = NUMBER_OF_GUESSES; 
-let currentGuess = [];
-let nextLetter = 0;
-const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
-// as 3 variáveis let acima não podem ser substituídas, pois seus valores serão alterados conforme o jogo acontece/
-console.log(rightGuessString);
+console.log(initialGameState);
 
 const initBoard = () => {
   const board = document.getElementById("game-board");
@@ -14,7 +9,7 @@ const initBoard = () => {
 }
 
 function createBoard(board){
-  for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+  for (let i = 0; i < initialGameState.NUMBER_OF_GUESSES; i++) {
     let row = document.createElement("div");
     row.className = "letter-row";
     for (let j = 0; j < 5; j++) {
@@ -37,8 +32,7 @@ const shadeKeyBoard =(letter, color) => {
     if (elem.textContent === letter) {
       const oldColor = elem.style.backgroundColor;
       if (oldColor !== "green" && !(oldColor === "yellow" && color !== "green")) {
-        const updatedElem = Object.assign({}, elem, { style: { backgroundColor: color } });
-        elem.parentNode.replaceChild(updatedElem, elem);
+        elem.style.backgroundColor = color;
       }
     }
   });
@@ -46,20 +40,20 @@ const shadeKeyBoard =(letter, color) => {
 
 
 const deleteLetter = () => {
-  const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
-  const box = row.children[nextLetter - 1];
+  const row = document.getElementsByClassName("letter-row")[6 - initialGameState.guessesRemaining];
+  const box = row.children[initialGameState.nextLetter - 1];
   box.textContent = "";
   box.classList.remove("filled-box");
-  currentGuess.pop();
-  nextLetter -= 1;
+  initialGameState.currentGuess.pop();
+  initialGameState.nextLetter -= 1;
 }
 
 function checkGuess() {
-  let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+  let row = document.getElementsByClassName("letter-row")[6 - initialGameState.guessesRemaining];
   let guessString = "";
-  let rightGuess = Array.from(rightGuessString);
+  let rightGuess = Array.from(initialGameState.rightGuessString);
 
-  for (const val of currentGuess) {
+  for (const val of initialGameState.currentGuess) {
     guessString += val;
   }
 
@@ -77,7 +71,7 @@ function checkGuess() {
 
   //check green
   for (let i = 0; i < 5; i++) {
-    if (rightGuess[i] == currentGuess[i]) {
+    if (rightGuess[i] == initialGameState.currentGuess[i]) {
       letterColor[i] = "green";
       rightGuess[i] = "#";
     }
@@ -90,7 +84,7 @@ function checkGuess() {
 
     //checking right letters
     for (let j = 0; j < 5; j++) {
-      if (rightGuess[j] == currentGuess[i]) {
+      if (rightGuess[j] == initialGameState.currentGuess[i]) {
         letterColor[i] = "yellow";
         rightGuess[j] = "#";
       }
@@ -109,35 +103,35 @@ function checkGuess() {
     }, delay);
   }
 
-  if (guessString === rightGuessString) {
+  if (guessString === initialGameState.rightGuessString) {
     toastr.success("You guessed right! Game over!");
-    guessesRemaining = 0;
+    initialGameState.guessesRemaining = 0;
     return;
   } else {
-    guessesRemaining -= 1;
-    currentGuess = [];
-    nextLetter = 0;
+    initialGameState.guessesRemaining -= 1;
+    initialGameState.currentGuess = [];
+    initialGameState.nextLetter = 0;
 
-    if (guessesRemaining === 0) {
+    if (initialGameState.guessesRemaining === 0) {
       toastr.error("You've run out of guesses! Game over!");
-      toastr.info(`The right word was: "${rightGuessString}"`);
+      toastr.info(`The right word was: "${initialGameState.rightGuessString}"`);
     }
   }
 }
 
-function insertLetter(pressedKey) {
-  if (nextLetter === 5) {
+const  insertLetter = (pressedKey) => {
+  if (initialGameState.nextLetter === 5) {
     return;
   }
   pressedKey = pressedKey.toLowerCase();
 
-  let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
-  let box = row.children[nextLetter];
+  let row = document.getElementsByClassName("letter-row")[6 - initialGameState.guessesRemaining];
+  let box = row.children[initialGameState.nextLetter];
   animateCSS(box, "pulse");
   box.textContent = pressedKey;
   box.classList.add("filled-box");
-  currentGuess.push(pressedKey);
-  nextLetter += 1;
+  initialGameState.currentGuess.push(pressedKey);
+  initialGameState.nextLetter += 1;
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
@@ -161,12 +155,12 @@ const animateCSS = (element, animation, prefix = "animate__") =>
   });
 
 document.addEventListener("keyup", (e) => {
-  if (guessesRemaining === 0) {
+  if (initialGameState.guessesRemaining === 0) {
     return;
   }
 
   let pressedKey = String(e.key);
-  if (pressedKey === "Backspace" && nextLetter !== 0) {
+  if (pressedKey === "Backspace" && initialGameState.nextLetter !== 0) {
     deleteLetter();
     return;
   }
@@ -180,7 +174,7 @@ document.addEventListener("keyup", (e) => {
   if (!found || found.length > 1) {
     return;
   } else {
-    insertLetter(pressedKey);
+    insertLetter(pressedKey, initialGameState);
   }
 });
 
