@@ -11,8 +11,9 @@ Repositório referencia: https://github.com/Morgenstern2573/wordle_clone
 │   ├── initial_game_state.js
 │   └── words.js 
 ├── view
-│   ├── index.html
-│   └── style.css          
+│   ├── css
+│   ├── board_game.html
+│   └── home_page.html          
 └── main.js
 ```
 

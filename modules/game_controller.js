@@ -8,4 +8,4 @@ export const deleteLetter = () => {
     box.classList.remove("filled-box");
     initialGameState.currentGuess.pop();
     initialGameState.nextLetter -= 1;
-  }
+}
