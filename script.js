@@ -1,6 +1,6 @@
-import { WORDS } from "./modules/words.js";
-import { initialGameState } from "./modules/initial_game_state.js";
-import { deleteLetter } from "./modules/game_controller.js";
+import { WORDS } from "../modules/words.js";
+import { initialGameState } from "../modules/initial_game_state.js";
+import { deleteLetter } from "../modules/game_controller.js";
 
 console.log(initialGameState);
 

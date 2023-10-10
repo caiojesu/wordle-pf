@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+body {
+    margin: 0;
+}
+.principal {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 1rem;
+    gap: 10px;
+    background-color: black;
+
+    .secao-01 {
+        .s01-titulo {
+            margin: 0;
+            font-family:  'Young Serif', serif;
+            font-size: 4rem;
+
+            .destaque-01 {
+                color: white;
+            }
+
+            .destaque-02 {
+                color: white;
+            }
+
+            .destaque-03 {
+                color: white;
+            }
+        }
+    }
+
+    .secao-02 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 40px;
+
+        .s02-botao {
+            margin: 0;
+            font-family:  'Young Serif', serif;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: black;
+            background-color: beige;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .s02-botao:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            background-color: lightcoral;
+        }
+    }
+}
