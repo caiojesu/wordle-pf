@@ -5757,3 +5757,8 @@ export const WORDS = [
     'biffy',
     'pupal',
   ]
+
+  export const ARRAY_ANIMAIS = [ 'panda', 'porco', 'pulga' ];
+  export const ARRAY_OBJETOS = [ 'bolsa', 'pente', 'mouse' ];
+  export const ARRAY_NOMES = [ 'pedro', 'andre', 'lucas' ];
+  export const ARRAY_VERBOS = [ 'matar', 'comer', 'beber'];
