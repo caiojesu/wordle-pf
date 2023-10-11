@@ -1,9 +1,10 @@
-import { WORDS } from "../modules/words.js";
+import { WORDS} from "../modules/words.js";
 import { initialGameState } from "../modules/initial_game_state.js";
 import { deleteLetter } from "../modules/game_controller.js";
 
 console.log(initialGameState);
 
+// A função "initBoard" traz consigo um código de ID "game-board" proveniente do HTML, que tem como objetivo inicializar o tabuleiro do jogo.
 const initBoard = () => {
   const board = document.getElementById("game-board");
  createBoard(board);
@@ -44,6 +45,9 @@ const createColumns = () => {
 
 // As 3 funções traduzidas anteriomente formam, em conjunto, as grades de letras a qual o usuário irá "escrever".
 
+// A função "shadeKeyBoard" é responsável por selecionar todos os botões do teclado utilizando a função "array.from" e posteriormente
+// percorrendo-os através da função "forEach", com o objetivo de verificar se a letra do botão corresponde com o argumento anteriormente fornecido (letter), e posteriormente 
+// modificando a cor de fundo do botão a depender da letra correspondente à palavra, alternando de amarelo ao verde.
 const shadeKeyBoard = (letter, color) => {
   const keyboardButtons = Array.from(document.getElementsByClassName("keyboard-button"));
 
