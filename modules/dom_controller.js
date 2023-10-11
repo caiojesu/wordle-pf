@@ -4,12 +4,6 @@ export const getRow = (guessesRemaining) => {
 };
   
 // Retorna a caixa atual de acordo com a linha escolhida e a próxima caixa.
-export const getBox = (row) => (index) => {
-    return row.children[index];
+export const getBox = (row, nextLetter) => {
+    return row.children[nextLetter - 1];
 };
-
-// Limpa o conteúdo da caixa escolhida 
-export const clearBoxContent = (box) => {
-    box.textContent = "";
-    box.classList.remove("filled-box");
-}
