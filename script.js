@@ -63,13 +63,14 @@ const shadeKeyBoard = (letter, color) => {
   });
 }
 
-function checkGuess() {
-  let row = document.getElementsByClassName("letter-row")[6 - initialGameState.guessesRemaining];
-  let guessString = "";
-  let rightGuess = Array.from(initialGameState.rightGuessString);
+//A função Checkguess tem como objetivo checar se o número de letras que o usuário colocou é o solicitado,
+//Caso o número de letras seja inferior a 6, ele dirá que é insuficiente, e caso a palavra não esteja dentro da lista
+//ela é automaticamente rejeitada
 
-  for (const val of initialGameState.currentGuess) {
-    guessString += val;
+const checkGuess = (initialGameState) =>  {
+  const row = getRow(initialGameState.guessesRemaining);
+  const guessString = "";
+  const rightGuess = Array.from(initialGameState.rightGuessString);
   }
 
   if (guessString.length != 5) {
