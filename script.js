@@ -9,22 +9,40 @@ const initBoard = () => {
  createBoard(board);
 }
 
-function createBoard(board){
-  for (let i = 0; i < initialGameState.NUMBER_OF_GUESSES; i++) {
-    let row = document.createElement("div");
-    row.className = "letter-row";
-    for (let j = 0; j < 5; j++) {
-    createColumns(row);
-    }
-    board.appendChild(row);
-  }
-}
-//substituí a função function pela função const em notação arrow
- const createColumns = (row) => {
-    const box = document.createElement("div");
-    box.className = "letter-box";
-    row.appendChild(box);
-}
+// A função createBoard tem a função de construir a placa do jogo, que é uma grade de linhas e colunas. Ela aceita um único
+//argumento chamado "board" que se encontra no código HTML. Na própria função é determinado o número de tentativas por meio da const
+// "NUMBER_OF_GUESSES". Array.from é usado para criar um array de linhas baseado no número de tentativas.  
+
+const createBoard = (board) => {
+  const NUMBER_OF_GUESSES = initialGameState.NUMBER_OF_GUESSES;
+  const rows = Array.from({ length: NUMBER_OF_GUESSES }, () => createRow());
+
+  rows.forEach((row) => board.appendChild(row));
+};
+
+// A função "createRow" cria uma linha para cada elemento do array de linhas (no caso, 6 linhas). É uma função pura pois não 
+// depende de variáveis globais e nem causa efeitos colaterais ao restante do código.
+const createRow = () => {
+  const row = document.createElement("div");
+  row.className = "letter-row";
+
+  // A função "columns" cria 5 colunas para cada uma das 6 linhas. Ela também é uma função pura pois não depende de elemntos externos.
+
+  const columns = Array.from({ length: 5 }, () => createColumns());
+  columns.forEach((column) => row.appendChild(column));
+
+  return row;
+};
+
+// A função createColumns tem a função de adicionar caixas em cada coluna do array de linhas.
+
+const createColumns = () => {
+  const box = document.createElement("div");
+  box.className = "letter-box";
+  return box;
+};
+
+// As 3 funções traduzidas anteriomente formam, em conjunto, as grades de letras a qual o usuário irá "escrever".
 
 const shadeKeyBoard = (letter, color) => {
   const keyboardButtons = Array.from(document.getElementsByClassName("keyboard-button"));
