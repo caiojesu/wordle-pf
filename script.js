@@ -154,25 +154,25 @@ const  insertLetter = (pressedKey) => {
   initialGameState.nextLetter += 1;
 }
 
-const animateCSS = (element, animation, prefix = "animate__") =>
-  // We create a Promise and return it
-  new Promise((resolve, reject) => {
-    const animationName = `${prefix}${animation}`;
-    // const node = document.querySelector(element);
-    const node = element;
-    node.style.setProperty("--animate-duration", "0.3s");
-
-    node.classList.add(`${prefix}animated`, animationName);
-
-    // When the animation ends, we clean the classes and resolve the Promise
-    function handleAnimationEnd(event) {
+// A função a seguir serve para adicionar elementos CSS ao HTML, com o objetivo de controlar o início e o término da animação.
+// Nela há 3 argumentos "elemnt" que é o elemento do HTML que receberá a animação, "animation" que é a classe de animação e o "prefix" que adiciona um prefixo à classe de animação.
+// Nessa função utilizei o uso de const para obedecer conceitos de imutabilidade e optei por remover o uso de "promessa" sendo ela uma função que não se adequa ao funcional.
+const animateCSS = (element, animation, prefix = "animate__") => {
+  const animationName = `${prefix}${animation}`;
+  const node = element;
+  node.style.setProperty("--animate-duration", "0.3s");
+  node.classList.add(`${prefix}animated`, animationName);
+// A função a seguir interrompe a animação após verificar por meio de comparação se a animação realizada foi a mesma regr=istrada para o elemnto.
+  const handleAnimationEnd = (event) => {
+    if (event.animationName === animationName) {
       event.stopPropagation();
       node.classList.remove(`${prefix}animated`, animationName);
-      resolve("Animation ended");
     }
+  };
 
-    node.addEventListener("animationend", handleAnimationEnd, { once: true });
-  });
+  node.addEventListener("animationend", handleAnimationEnd);
+};
+
 
 document.addEventListener("keyup", (e) => {
   const row = getRow(initialGameState.guessesRemaining);
