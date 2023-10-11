@@ -8,3 +8,8 @@ export const initialGameState = {
     nextLetter: 0,
     rightGuessString: WORDS[Math.floor(Math.random() * WORDS.length)],
 };
+
+// Atualiza um objeto state sobrescrevendo por outro objeto state 
+export const updateGameState = (state) => (updatedGameState) => {
+    Object.assign(state, updatedGameState);
+}
