@@ -69,8 +69,12 @@ const shadeKeyBoard = (letter, color) => {
 
 const checkGuess = (initialGameState) =>  {
   const row = getRow(initialGameState.guessesRemaining);
-  const guessString = "";
+  let guessString = "";
   const rightGuess = Array.from(initialGameState.rightGuessString);
+  
+  // Esse for deve ser substituido por um método funcional
+  for (const val of initialGameState.currentGuess) {
+    guessString += val;
   }
 
   if (guessString.length != 5) {
@@ -184,7 +188,7 @@ document.addEventListener("keyup", (e) => {
   }
 
   if (pressedKey === "Enter") {
-    checkGuess();
+    checkGuess(initialGameState);
     return;
   }
 
