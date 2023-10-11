@@ -1,6 +1,8 @@
 import { WORDS} from "../modules/words.js";
 import { initialGameState } from "../modules/initial_game_state.js";
 import { deleteLetter } from "../modules/game_controller.js";
+import { getBox, getRow} from "../modules/dom_controller.js";
+
 
 console.log(initialGameState);
 
@@ -168,13 +170,15 @@ const animateCSS = (element, animation, prefix = "animate__") =>
   });
 
 document.addEventListener("keyup", (e) => {
+  const row = getRow(initialGameState.guessesRemaining);
+  const box = getBox(row, initialGameState.nextLetter);
   if (initialGameState.guessesRemaining === 0) {
     return;
   }
 
   let pressedKey = String(e.key);
   if (pressedKey === "Backspace" && initialGameState.nextLetter !== 0) {
-    deleteLetter();
+    deleteLetter(initialGameState)(box);
     return;
   }
 

@@ -8,3 +8,9 @@ export const getRow = (guessesRemaining) => {
 export const getBox = (row, nextLetter) => {
     return row.children[nextLetter - 1];
 };
+
+// Limpa o conteúdo da caixa escolhida 
+export const clearBoxContent = (box) => {
+    box.textContent = "";
+    box.classList.remove("filled-box");
+}
