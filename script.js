@@ -69,90 +69,79 @@ const shadeKeyBoard = (letter, color) => {
 
 const checkGuess = (initialGameState) =>  {
   const row = getRow(initialGameState.guessesRemaining);
-  let guessString = "";
+  const guessString = initialGameState.currentGuess.join('');
   const rightGuess = Array.from(initialGameState.rightGuessString);
   
-  // Esse for deve ser substituido por um método funcional
-  for (const val of initialGameState.currentGuess) {
-    guessString += val;
-  }
-
-  if (guessString.length != 5) {
-    toastr.error("Not enough letters!");
-    return;
-  }
+  if (guessString.length !== 5) {
+    toastr.error("Não há letras suficientes!");
+    return; }
 
   if (!WORDS.includes(guessString)) {
-    toastr.error("Word not in list!");
-    return;
-  }
+    toastr.error("A palavra não está na lista!");
+    return; }
 
-  var letterColor = ["gray", "gray", "gray", "gray", "gray"];
+  const letterColor = ["gray", "gray", "gray", "gray", "gray"];
 
-  //check green
-  for (let i = 0; i < 5; i++) {
-    if (rightGuess[i] == initialGameState.currentGuess[i]) {
+  // Usa a função forEach para comparar letra inserida pelo usuário com a letra correspondente da palavra correta. 
+  // se a letra estiver contida na palavra e no lugar certo, a cor da letra na caixa correspondente é alterada para verde.
+  initialGameState.currentGuess.forEach((val, i) => {
+    if (rightGuess[i] === val) {
       letterColor[i] = "green";
       rightGuess[i] = "#";
     }
-  }
+  });
 
-  //check yellow
-  //checking guess letters
-  for (let i = 0; i < 5; i++) {
-    if (letterColor[i] == "green") continue;
-
-    //checking right letters
-    for (let j = 0; j < 5; j++) {
-      if (rightGuess[j] == initialGameState.currentGuess[i]) {
+  initialGameState.currentGuess.forEach((guessLetter, i) => {
+    if (letterColor[i] === "green") return;
+// se houver uma letra correta, porém na caixa errada, essa mesma letra nessa mesma caixa será alterada para a cor amarela.
+    rightGuess.forEach((rightLetter, j) => {
+      if (rightLetter === guessLetter) {
         letterColor[i] = "yellow";
         rightGuess[j] = "#";
       }
-    }
-  }
-
-  for (let i = 0; i < 5; i++) {
-    let box = row.children[i];
-    let delay = 250 * i;
+    });
+  });
+//Usa a função animateCSS para aplicar uma animação ás caixas e a função shadeKeyBoard para alterar as cores do teclado, seguindo a mesma lógica das funções anteriores (verde e amarelo).
+  initialGameState.currentGuess.forEach((val, i) => {
+    const box = row.children[i];
+    const delay = 250 * i;
     setTimeout(() => {
-      //flip box
       animateCSS(box, "flipInX");
-      //shade box
       box.style.backgroundColor = letterColor[i];
-      shadeKeyBoard(guessString.charAt(i) + "", letterColor[i]);
+      shadeKeyBoard(guessString.charAt(i), letterColor[i]);
     }, delay);
-  }
-
+  });
+// A função abaixo verifica se as "guessString" é igual à a palavra correta, se sim, exibe uma mensagem de sucesso. Se não, decresce do número de tentativas e o jogo continua.
   if (guessString === initialGameState.rightGuessString) {
-    toastr.success("You guessed right! Game over!");
+    toastr.success("Você venceu. Fim de jogo!");
     initialGameState.guessesRemaining = 0;
-    return;
   } else {
     initialGameState.guessesRemaining -= 1;
     initialGameState.currentGuess = [];
     initialGameState.nextLetter = 0;
-
+// Verifica se o número de chances é igual a 0, se sim, exibe um aviso e uma mensagem informando a palavra correta.
     if (initialGameState.guessesRemaining === 0) {
-      toastr.error("You've run out of guesses! Game over!");
-      toastr.info(`The right word was: "${initialGameState.rightGuessString}"`);
+      toastr.error("Você esgotou as chances! Game Over!");
+      toastr.info(`A palavra correta era: "${initialGameState.rightGuessString}"`);
     }
   }
 }
 
-const  insertLetter = (pressedKey) => {
+const insertLetter = (pressedKey, initialGameState) => {
   if (initialGameState.nextLetter === 5) {
     return;
   }
   pressedKey = pressedKey.toLowerCase();
 
-  let row = document.getElementsByClassName("letter-row")[6 - initialGameState.guessesRemaining];
-  let box = row.children[initialGameState.nextLetter];
+  const row = getRow(initialGameState.guessesRemaining);
+  const box = row.children[initialGameState.nextLetter];
   animateCSS(box, "pulse");
   box.textContent = pressedKey;
   box.classList.add("filled-box");
   initialGameState.currentGuess.push(pressedKey);
   initialGameState.nextLetter += 1;
 }
+
 
 // A função a seguir serve para adicionar elementos CSS ao HTML, com o objetivo de controlar o início e o término da animação.
 // Nela há 3 argumentos "elemnt" que é o elemento do HTML que receberá a animação, "animation" que é a classe de animação e o "prefix" que adiciona um prefixo à classe de animação.
