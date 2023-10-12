@@ -163,45 +163,46 @@ const animateCSS = (element, animation, prefix = "animate__") => {
 };
 
 
-document.addEventListener("keyup", (e) => {
-  const row = getRow(initialGameState.guessesRemaining);
-  const box = getBox(row, initialGameState.nextLetter);
+// A função é responsável por admnistrar a entrada do usuário no jogo, verificando as teclas pressionadas e realizando ações com base nas teclas pressionadas, 
+//como inserir letras, apagar letras e verificar a tentativa do usuário.
+const handleKeyPress = (e, initialGameState) => {
   if (initialGameState.guessesRemaining === 0) {
     return;
   }
 
-  let pressedKey = String(e.key);
+  const pressedKey = String(e.key);
+
   if (pressedKey === "Backspace" && initialGameState.nextLetter !== 0) {
     deleteLetter(initialGameState)(box);
-    return;
-  }
-
-  if (pressedKey === "Enter") {
+  } else if (pressedKey === "Enter") {
     checkGuess(initialGameState);
-    return;
-  }
-
-  let found = pressedKey.match(/[a-z]/gi);
-  if (!found || found.length > 1) {
-    return;
   } else {
-    insertLetter(pressedKey, initialGameState);
+    const found = pressedKey.match(/[a-z]/gi);
+    if (found && found.length === 1) {
+      insertLetter(pressedKey, initialGameState);
+    }
   }
+};
+
+// Adicione um ouvinte de evento para o evento de pressionar uma tecla
+document.addEventListener("keyup", (e) => {
+  const row = getRow(initialGameState.guessesRemaining);
+  const box = getBox(row, initialGameState.nextLetter);
+  handleKeyPress(e, initialGameState);
 });
 
+// Adicione um ouvinte de evento para o evento de clique no teclado virtual
 document.getElementById("keyboard-cont").addEventListener("click", (e) => {
   const target = e.target;
 
-  if (!target.classList.contains("keyboard-button")) {
-    return;
-  }
-  let key = target.textContent;
+  if (target.classList.contains("keyboard-button")) {
+    let key = target.textContent;
+    if (key === "Del") {
+      key = "Backspace";
+    }
 
-  if (key === "Del") {
-    key = "Backspace";
+    document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
   }
-
-  document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
 
 
