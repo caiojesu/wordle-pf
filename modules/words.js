@@ -1,7 +1,7 @@
-const ARRAY_ANIMAIS = ['panda', 'porco', 'pulga'];
-const ARRAY_OBJETOS = ['bolsa', 'pente', 'mouse'];
-const ARRAY_NOMES = ['pedro', 'andre', 'lucas'];
-const ARRAY_VERBOS = ['matar', 'comer', 'beber'];
+const ARRAY_ANIMAIS = ['panda', 'porco', 'pulga', 'pombo', 'aguia', 'cupim', 'corvo', 'cisne', 'cabra', 'bisao', 'cobra', 'arara'];
+const ARRAY_OBJETOS = ['bolsa', 'pente', 'mouse', 'prato', 'porta', 'vasos', 'jarro','livro', 'lapis', 'pedra'];
+const ARRAY_NOMES = ['pedro', 'andre', 'lucas','luisa','maria','julia', 'lucia', 'suzan', 'elisa', 'marco'];
+const ARRAY_VERBOS = ['matar', 'comer', 'beber', 'casar', 'latir','parir','tirar','posar','polir'];
 export const WORDS = localStorage.getItem("WORDS")?.split(',') || [];
 
 document.addEventListener("DOMContentLoaded", () => {
