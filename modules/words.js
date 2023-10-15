@@ -2,7 +2,7 @@ const ARRAY_ANIMAIS = ['panda', 'porco', 'pulga'];
 const ARRAY_OBJETOS = ['bolsa', 'pente', 'mouse'];
 const ARRAY_NOMES = ['pedro', 'andre', 'lucas'];
 const ARRAY_VERBOS = ['matar', 'comer', 'beber'];
-export const WORDS = ['garfo', 'foice', 'jarro'];
+export const WORDS = localStorage.getItem("WORDS")?.split(',') || [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const botao1 = document.getElementById("botao-1");
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const atualizarWords = (array) => {
     WORDS.push(...array);
     console.log("WORDS atualizado com sucesso.");
+    localStorage.setItem("WORDS", WORDS);
   }
 
   botao1.addEventListener("click", () => {

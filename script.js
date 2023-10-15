@@ -115,6 +115,7 @@ const checkGuess = (initialGameState) =>  {
   if (guessString === initialGameState.rightGuessString) {
     toastr.success("Você venceu. Fim de jogo!");
     initialGameState.guessesRemaining = 0;
+    localStorage.removeItem("WORDS");
   } else {
     initialGameState.guessesRemaining -= 1;
     initialGameState.currentGuess = [];
@@ -123,6 +124,7 @@ const checkGuess = (initialGameState) =>  {
     if (initialGameState.guessesRemaining === 0) {
       toastr.error("Você esgotou as chances! Game Over!");
       toastr.info(`A palavra correta era: "${initialGameState.rightGuessString}"`);
+      localStorage.removeItem("WORDS");
     }
   }
 }
