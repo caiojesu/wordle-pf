@@ -23,3 +23,5 @@ Repositório referencia: https://github.com/Morgenstern2573/wordle_clone
     * `game_controller.js` : Este arquivo contém o código responsável por controlar o estado do jogo.
     * `words.js` : Este arquivo contém uma lista de palavras que serão usadas no jogo.
 * `view` : Esta pasta contém os arquivos relacionados à interface do usuário.
+
+* link da hospedagem do projeto na plataforma Netlify: https://letramania.netlify.app/
