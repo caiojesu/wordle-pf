@@ -39,7 +39,7 @@ const createRow = () => {
 
   const columns = Array.from({ length: 5 }, () => createColumns());
 
-  // Use map para adicionar as colunas à linha
+  // Usa map para adicionar as colunas às linhas
   const Columns = columns.map((column) => {
     row.appendChild(column);
     return column;
@@ -128,7 +128,7 @@ const checkGuess = (initialGameState) =>  {
   });
 // A função abaixo verifica se as "guessString" é igual à a palavra correta, se sim, exibe uma mensagem de sucesso. Se não, decresce do número de tentativas e o jogo continua.
   if (guessString === initialGameState.rightGuessString) {
-    toastr.success("Você venceu. Fim de jogo!");
+    toastr.success("Você acertou. Fim de jogo!");
     initialGameState.guessesRemaining = 0;
     localStorage.removeItem("WORDS");
   } else {
