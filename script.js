@@ -20,9 +20,15 @@ const createBoard = (board) => {
   const NUMBER_OF_GUESSES = initialGameState.NUMBER_OF_GUESSES;
   const rows = Array.from({ length: NUMBER_OF_GUESSES }, () => createRow());
 
-  rows.forEach((row) => board.appendChild(row));
-};
+  // Use map para criar as novas linhas 
+  const newBoard = rows.map((row) => {
+    const clonedRow = row.cloneNode(true); // Clona a linha para evitar mutações
+    board.appendChild(clonedRow);
+    return clonedRow;
+  });
 
+  return newBoard;
+};
 // A função "createRow" cria uma linha para cada elemento do array de linhas (no caso, 6 linhas). É uma função pura pois não 
 // depende de variáveis globais e nem causa efeitos colaterais ao restante do código.
 const createRow = () => {
@@ -32,7 +38,12 @@ const createRow = () => {
   // A função "columns" cria 5 colunas para cada uma das 6 linhas. Ela também é uma função pura pois não depende de elemntos externos.
 
   const columns = Array.from({ length: 5 }, () => createColumns());
-  columns.forEach((column) => row.appendChild(column));
+
+  // Use map para adicionar as colunas à linha
+  const Columns = columns.map((column) => {
+    row.appendChild(column);
+    return column;
+  });
 
   return row;
 };
@@ -48,20 +59,24 @@ const createColumns = () => {
 // As 3 funções traduzidas anteriomente formam, em conjunto, as grades de letras a qual o usuário irá "escrever".
 
 // A função "shadeKeyBoard" é responsável por selecionar todos os botões do teclado utilizando a função "array.from" e posteriormente
-// percorrendo-os através da função "forEach", com o objetivo de verificar se a letra do botão corresponde com o argumento anteriormente fornecido (letter), e posteriormente 
+// percorrendo-os através da função "map", com o objetivo de verificar se a letra do botão corresponde com o argumento anteriormente fornecido (letter), e posteriormente 
 // modificando a cor de fundo do botão a depender da letra correspondente à palavra, alternando de amarelo ao verde.
 const shadeKeyBoard = (letter, color) => {
   const keyboardButtons = Array.from(document.getElementsByClassName("keyboard-button"));
 
-    keyboardButtons.forEach((elem) => {
+  // Use map para criar um novo array de elementos com as cores modificadas
+  const newKeyboardButtons = keyboardButtons.map((elem) => {
     if (elem.textContent === letter) {
       const oldColor = elem.style.backgroundColor;
       if (oldColor !== "green" && !(oldColor === "yellow" && color !== "green")) {
-        elem.style.backgroundColor = color;
+        // Retorna um novo elemento com a cor modificada
+        return { ...elem, style: { ...elem.style, backgroundColor: color } };
       }
     }
+    // Retorna o elemento original sem modificações
+    return elem;
   });
-}
+};
 
 //A função Checkguess tem como objetivo checar se o número de letras que o usuário colocou é o solicitado,
 //Caso o número de letras seja inferior a 6, ele dirá que é insuficiente, e caso a palavra não esteja dentro da lista
