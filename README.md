@@ -25,3 +25,4 @@ Repositório referencia: https://github.com/Morgenstern2573/wordle_clone
 * `view` : Esta pasta contém os arquivos relacionados à interface do usuário.
 
 * link da hospedagem do projeto na plataforma Netlify: https://letramania.netlify.app/
+* link do código à respeito do jogo LETRAMANIA: https://youtu.be/NXOoTxpFyss?si=LDVEefUTHQXZJBEG
